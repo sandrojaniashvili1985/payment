@@ -1,37 +1,50 @@
-// import React from 'react';
+/* eslint-disable react/prop-types */
+import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 import TransactionRow from './TransactionRow';
 import axios from 'axios';
-import { useTransactionStore } from '../hook/useTransactionStore';
-import { useEffect, } from 'react';
 import AddPayment from './AddPayment';
 
-const TransactionList = () => {
+const TransactionList = ({ searchText, updateTransactionStats }) => {
   const { isLoading, error, data: transactions } = useQuery('transactions', () =>
     axios.get('https://6069981de1c2a10017544b18.mockapi.io/transactions')
   );
 
-  const setTotalAmount = useTransactionStore((state) => state.setTotalAmount);
-  const setRecords = useTransactionStore((state) => state.setRecords);
+  const [filteredTransactions, setFilteredTransactions] = useState([]);
 
-  const totalAmount = transactions?.data.reduce((acc, transaction) => acc + transaction.amount, 0);
   useEffect(() => {
-    setTotalAmount(totalAmount);
-    setRecords(transactions?.data.length);
+    if (transactions) {
+      // Filter transactions based on the searchText
+      const filtered = transactions.data.filter(transaction => {
+        // Check if any property value contains the searchText
+        return Object.values(transaction).some(value => {
+          // Convert values to lowercase for case-insensitive search
+          const lowerCaseValue = value.toString().toLowerCase();
+          const lowerCaseSearchText = searchText.toLowerCase();
+          return lowerCaseValue.includes(lowerCaseSearchText);
+        });
+      });
+      setFilteredTransactions(filtered);
 
-  }, [transactions, setTotalAmount, totalAmount, setRecords]);
+      // Calculate total amount of filtered transactions
+      const totalAmount = filtered.reduce((acc, transaction) => acc + transaction.amount, 0);
+      // Update totalAmount and records
+      updateTransactionStats(totalAmount, filtered.length);
+    }
+  }, [transactions, searchText, updateTransactionStats]);
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
 
+  // Render only the filtered transactions if searchText is not empty
+  const renderedTransactions = searchText ? filteredTransactions : transactions.data;
 
   return (
-    <div className='w-1/2 mt-4 h-80 overflow-y-scroll'>
-      {transactions.data.map(transaction => (
+    <div className='w-1/2 mt-4 h-max max-h-80 overflow-y-scroll'>
+      {renderedTransactions.map(transaction => (
         <TransactionRow key={transaction.id} transaction={transaction} />
       ))}
       <AddPayment />
-
     </div>
   );
 };
