@@ -2,6 +2,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import TransactionList from './components/TransactionList';
 import { useTransactionStore } from './hook/useTransactionStore';
 import NavBar from './components/NavBar';
+import ToasterProvider from './provider/ToasterProvider';
 
 const queryClient = new QueryClient();
 
@@ -12,6 +13,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <div className=" bg-blue-100 flex flex-col justify-center items-center h-screen">
+        <ToasterProvider />
         <NavBar />
         <h2 className='text-xl w-1/2 m-3'>
           <span className='mr-2'>{records}</span>

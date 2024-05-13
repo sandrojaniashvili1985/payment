@@ -3,7 +3,8 @@ import { useQuery } from 'react-query';
 import TransactionRow from './TransactionRow';
 import axios from 'axios';
 import { useTransactionStore } from '../hook/useTransactionStore';
-import { useEffect } from 'react';
+import { useEffect, } from 'react';
+import AddPayment from './AddPayment';
 
 const TransactionList = () => {
   const { isLoading, error, data: transactions } = useQuery('transactions', () =>
@@ -29,6 +30,7 @@ const TransactionList = () => {
       {transactions.data.map(transaction => (
         <TransactionRow key={transaction.id} transaction={transaction} />
       ))}
+      <AddPayment />
 
     </div>
   );

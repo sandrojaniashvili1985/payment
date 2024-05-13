@@ -1,9 +1,14 @@
 import { IoAddCircleOutline } from "react-icons/io5";
 import { CiSearch } from "react-icons/ci";
+import UsePaymentMenu from "../hook/usePaymentMenu";
 const NavBar = () => {
+  const { onOpen } = UsePaymentMenu();
+
   return (<div className='w-1/2 bg-white p-2 flex justify-between'>
     <div className=" py-2 px-2 border-r-gray-300 border-r-[1px]">
-      <button className=" text-blue-400">
+      <button
+        onClick={() => onOpen()}
+        className=" text-blue-400">
         <IoAddCircleOutline
           color="blue-400"
           size="1.5em"
