@@ -6,11 +6,16 @@ import axios from 'axios';
 import AddPayment from './AddPayment';
 
 const TransactionList = ({ searchText, updateTransactionStats }) => {
+  const [expandedRowId, setExpandedRowId] = useState(null);
+  const [filteredTransactions, setFilteredTransactions] = useState([]);
+
+  const handleRowClick = (id) => {
+    setExpandedRowId(id === expandedRowId ? null : id);
+  };
+
   const { isLoading, error, data: transactions } = useQuery('transactions', () =>
     axios.get('https://6069981de1c2a10017544b18.mockapi.io/transactions')
   );
-
-  const [filteredTransactions, setFilteredTransactions] = useState([]);
 
   useEffect(() => {
     if (transactions) {
@@ -25,7 +30,6 @@ const TransactionList = ({ searchText, updateTransactionStats }) => {
         });
       });
       setFilteredTransactions(filtered);
-
       // Calculate total amount of filtered transactions
       const totalAmount = filtered.reduce((acc, transaction) => acc + transaction.amount, 0);
       // Update totalAmount and records
@@ -40,9 +44,13 @@ const TransactionList = ({ searchText, updateTransactionStats }) => {
   const renderedTransactions = searchText ? filteredTransactions : transactions.data;
 
   return (
-    <div className='w-1/2 mt-4 h-max max-h-80 overflow-y-scroll'>
+    <div className='w-full mt-4 h-max max-h-80 overflow-y-scroll'>
       {renderedTransactions.map(transaction => (
-        <TransactionRow key={transaction.id} transaction={transaction} />
+        <TransactionRow
+          key={transaction.id}
+          transaction={transaction}
+          expanded={transaction.id === expandedRowId}
+          onClick={handleRowClick} />
       ))}
       <AddPayment />
     </div>

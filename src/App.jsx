@@ -20,20 +20,22 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="bg-blue-100 flex flex-col justify-center items-center h-screen">
-        <ToasterProvider />
-        <NavBar setSearchText={setSearchText} />
-        <h2 className='text-xl w-1/2 m-3'>
-          <span className='mr-2'>{records}</span>
-          records found
-        </h2>
-        <TransactionList
-          searchText={searchText}
-          updateTransactionStats={updateTransactionStats} // Pass the callback function
-        />
-        <div className='w-1/2 bg-blue-400 pt-2 pr-1'>
-          <p className='text-right'>Total:</p>
-          <p className='text-right'>{totalAmount}</p>
+      <div className="bg-blue-100 flex flex-col items-center pt-6 h-screen ">
+        <div className='max-sm:w-full '>
+          <ToasterProvider />
+          <NavBar setSearchText={setSearchText} />
+          <h2 className='text-xl m-3'>
+            <span className='mr-2'>{records}</span>
+            records found
+          </h2>
+          <TransactionList
+            searchText={searchText}
+            updateTransactionStats={updateTransactionStats} // Pass the callback function
+          />
+          <div className=' bg-blue-400 pt-2 pr-1'>
+            <p className='text-right'>Total:</p>
+            <p className='text-right'>{totalAmount}</p>
+          </div>
         </div>
       </div>
     </QueryClientProvider>

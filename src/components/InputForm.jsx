@@ -55,8 +55,9 @@ const InputForm = () => {
             disabled={loading}
             id="title"
             {...register("title", { required: true })}
-            className={`border border-gray-300 w-full p-2 rounded mt-1
-                       ${errors.title ? "border-rose-500" : "border-neutral-300"}
+            className=
+            {`border border-gray-300 w-full p-2 rounded mt-1
+                      ${errors.title ? "border-rose-500" : "border-neutral-300"}
                       ${errors.title ? "focus:border-rose-500" : "focus:border-black"}
                       `}
           />
