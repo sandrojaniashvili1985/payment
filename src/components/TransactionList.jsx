@@ -13,7 +13,7 @@ const TransactionList = ({ searchText, updateTransactionStats }) => {
     setExpandedRowId(id === expandedRowId ? null : id);
   };
 
-  const { isLoading, error, data: transactions } = useQuery('transactions', () =>
+  const { isLoading, error, data: transactions, refetch } = useQuery('transactions', () =>
     axios.get('https://6069981de1c2a10017544b18.mockapi.io/transactions')
   );
 
@@ -52,7 +52,7 @@ const TransactionList = ({ searchText, updateTransactionStats }) => {
           expanded={transaction.id === expandedRowId}
           onClick={handleRowClick} />
       ))}
-      <AddPayment />
+      <AddPayment onSuccess={refetch} />
     </div>
   );
 };

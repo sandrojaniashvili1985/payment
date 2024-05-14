@@ -1,14 +1,13 @@
+/* eslint-disable react/prop-types */
 import { useForm } from "react-hook-form";
 import axios from 'axios';
 import toast from "react-hot-toast";
 import UsePaymentMenu from "../hook/usePaymentMenu";
 import { useState } from "react";
 
-
-const InputForm = () => {
-  const [loading, setLoading] = useState(false);
+const InputForm = ({ onSuccess }) => {
+  const [loading, setLoading] = useState();
   const { onClose } = UsePaymentMenu();
-
 
   const {
     register,
@@ -34,6 +33,7 @@ const InputForm = () => {
       );
       toast.success('Data posted successfully');
       onClose();
+      onSuccess();
     } catch (error) {
       console.error('Error posting data:', error);
       // Handle error, show error message, etc.
@@ -55,11 +55,10 @@ const InputForm = () => {
             disabled={loading}
             id="title"
             {...register("title", { required: true })}
-            className=
-            {`border border-gray-300 w-full p-2 rounded mt-1
-                      ${errors.title ? "border-rose-500" : "border-neutral-300"}
-                      ${errors.title ? "focus:border-rose-500" : "focus:border-black"}
-                      `}
+            className={`border border-gray-300 w-full p-2 rounded mt-1
+              ${errors.title ? "border-rose-500" : "border-neutral-300"}
+              ${errors.title ? "focus:border-rose-500" : "focus:border-black"}
+            `}
           />
           {errors.title && (
             <p className="text-sm text-red-500">Title is required.</p>
@@ -76,9 +75,9 @@ const InputForm = () => {
             id="amount"
             {...register("amount", { required: true })}
             className={`border border-gray-300 w-full p-2 rounded mt-1
-                      ${errors.amount ? "border-rose-500" : "border-neutral-300"}
-                      ${errors.amount ? "focus:border-rose-500" : "focus:border-black"}
-                      `}
+              ${errors.amount ? "border-rose-500" : "border-neutral-300"}
+              ${errors.amount ? "focus:border-rose-500" : "focus:border-black"}
+              `}
           />
           {errors.amount && (
             <p className="text-sm text-red-500">Amount is required.</p>
@@ -95,9 +94,9 @@ const InputForm = () => {
           id="category"
           {...register("category", { required: true })}
           className={`border border-gray-300 w-full p-2 rounded mt-1
-                     ${errors.category ? "border-rose-500" : "border-neutral-300"}
-                      ${errors.category ? "focus:border-rose-500" : "focus:border-black"}
-                    `}
+            ${errors.category ? "border-rose-500" : "border-neutral-300"}
+            ${errors.category ? "focus:border-rose-500" : "focus:border-black"}
+          `}
         >
           <option value="Payment">Payment</option>
           <option value="service">service</option>
@@ -121,9 +120,9 @@ const InputForm = () => {
           id="date"
           {...register("date", { required: true })}
           className={`border border-gray-300 w-full p-2 rounded mt-1
-                     ${errors.date ? "border-rose-500" : "border-neutral-300"}
-                      ${errors.date ? "focus:border-rose-500" : "focus:border-black"}
-                    `}
+            ${errors.date ? "border-rose-500" : "border-neutral-300"}
+            ${errors.date ? "focus:border-rose-500" : "focus:border-black"}
+          `}
         />
         {errors.date && (
           <p className="text-sm text-red-500">Choose date</p>

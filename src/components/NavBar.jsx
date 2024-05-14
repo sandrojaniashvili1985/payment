@@ -29,7 +29,4 @@ const NavBar = ({ setSearchText }) => {
   );
 }
 
-
 export default NavBar;
-
-

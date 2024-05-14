@@ -4,7 +4,6 @@ import NavBar from './components/NavBar';
 import ToasterProvider from './provider/ToasterProvider';
 import { useState } from 'react';
 
-
 const queryClient = new QueryClient();
 
 function App() {

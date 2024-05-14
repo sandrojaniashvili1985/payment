@@ -3,7 +3,7 @@ import { IoMdClose } from "react-icons/io";
 import UsePaymentMenu from "../hook/usePaymentMenu";
 import InputForm from "./InputForm";
 
-const AddPayment = () => {
+const AddPayment = ({ onSuccess }) => {
 
   const { isOpen, onClose } = UsePaymentMenu();
   const handleOnClose = () => {
@@ -24,7 +24,7 @@ const AddPayment = () => {
               </button>
               <p className="text-sm">ADD NEW PAYMENT</p>
             </div>
-            <InputForm />
+            <InputForm onSuccess={onSuccess} />
           </div>
         </div>
       </div>
